@@ -472,3 +472,7 @@ export {
   shouldRunIncrementalVacuum,
 } from "./maintenance.js";
 export * from "./machines.js";
+
+export * from "./project-attachments.js";
+
+export * from "./project-attachment-backfill.js";

@@ -387,7 +387,7 @@ async function createPendingThreadAndAttemptFirstDispatch(
       args.fork.historyEndSequence !== null &&
       args.request.visibility === "visible"
     ) {
-      copyForkSourceHistory(deps, {
+      await copyForkSourceHistory(deps, {
         fork: thread,
         historyEndSequence: args.fork.historyEndSequence,
         sourceThreadId: args.fork.sourceThreadId,
@@ -611,6 +611,7 @@ export async function createThreadFromRequest(
     }
   }
   await validatePromptAttachmentReferences({
+    db: deps.db,
     dataDir: deps.config.dataDir,
     input: requestInput.input,
     projectId: requestInput.projectId,
