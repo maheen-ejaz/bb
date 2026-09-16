@@ -3022,3 +3022,15 @@ and plugin branding separate from provider artwork resolution.
 ## Project environment scope for host calls
 
 `ExperimentalHostCallOptions.experimental_projectId` selects project machine environment overrides for one typed host RPC. Omission applies only global machine variables. The server validates the project and resolves values; the daemon applies them to the operation. Stabilization requires concurrent same-machine project isolation, invalid/deleted project behavior, worker reuse and child process inheritance coverage. `ExperimentalFakeHostRpcCall.experimental_projectId` records the selected scope in the test harness.
+
+## `HostsArea.experimental_reconcile`
+
+Explicitly reconcile a provider-managed machine with core’s recorded state.
+For suspended machines, coordinate the existing provider suspension operation
+and return HTTP 202 after starting it; callers can poll host status for completion.
+Provider suspend and resume implementations must be idempotent.
+Active and transitional states are left unchanged;
+the plugin uses `experimental_suspend` to request a new pause. Core schedules
+no provider polling. Validate concurrent resume/removal, failure reporting,
+long-running caller behavior, and the scope of supported states before
+stabilizing this API. Exposed as `bb machine reconcile`.
